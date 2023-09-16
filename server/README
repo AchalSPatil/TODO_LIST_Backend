@@ -1,2 +1,5 @@
 ## to run backend
-you just need 
+you just need run command (npm init) and press enter it will create node project and install all the necessary packages link react project
+
+then run the server using the command (nodemon index.js)
+
