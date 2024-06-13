@@ -29,40 +29,52 @@ export const toggleTodoDone = async (request, response) => {
     try {
         const todoRef = await Todo.findById(request.params.id);
 
+        if (!todoRef) {
+            return response.status(404).json({ message: 'Todo not found' });
+        }
+
         const todo = await Todo.findOneAndUpdate(
             { _id: request.params.id },
-            { done: !todoRef.done }
-        )
-
-        await todo.save();
+            { done: !todoRef.done },
+            { new: true }
+        );
 
         return response.status(200).json(todo);
     } catch (error) {
         return response.status(500).json(error.message);
     }
-}
+};
+
 
 export const updateTodo = async (request, response) => {
     try {
-        await Todo.findOneAndUpdate(
+        const todo = await Todo.findOneAndUpdate(
             { _id: request.params.id },
-            { data: request.body.data }
-        )
+            { data: request.body.data },
+            { new: true }
+        );
 
-        const todo = await Todo.findById(request.params.id);
+        if (!todo) {
+            return response.status(404).json({ message: 'Todo not found' });
+        }
 
         return response.status(200).json(todo);
     } catch (error) {
         return response.status(500).json(error.message);
     }
-}
+};
+
 
 export const deleteTodo = async (request, response) => {
     try {
-        const todo = await Todo.findByIdAndDelete(request.params.id)
+        const todo = await Todo.findByIdAndDelete(request.params.id);
 
-        return response.status(200).json(todo);
+        if (!todo) {
+            return response.status(404).json({ message: 'Todo not found' });
+        }
+
+        return response.status(200).json({ message: 'Todo deleted successfully' });
     } catch (error) {
         return response.status(500).json(error.message);
     }
-}
+};

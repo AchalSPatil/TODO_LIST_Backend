@@ -1,5 +1,13 @@
 ## to run backend
 you just need run command (npm init) and press enter it will create node project and install all the necessary packages link react project
 
-then run the server using the command (nodemon index.js)
+then run the server using the command (npm start)
 
+# env 
+username and password is included that should be configurable.
+
+# To run API's
+Post http://localhost:8080/todos
+body - {
+  "data": "frontEnd code"
+}
